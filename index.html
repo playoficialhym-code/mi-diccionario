@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mi Traductor Bidireccional</title>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; text-align: center; background-color: #f4f4f9; }
+        h1 { color: #333; }
+        .container { background: white; padding: 20px; border-radius: 8px; box-shadow: 0 0 10px rgba(0,0,0,0.1); max-width: 400px; margin: auto; }
+        input { width: 90%; padding: 10px; margin: 10px 0; border: 1px solid #ccc; border-radius: 4px; font-size: 16px;}
+        button { padding: 10px 20px; background-color: #007BFF; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 16px;}
+        button:hover { background-color: #0056b3; }
+        #resultado { margin-top: 20px; font-weight: bold; font-size: 1.2em; color: #28a745; }
+        .nota { font-size: 0.8em; color: #666; margin-top: 10px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Mi Traductor</h1>
+        <p>Escribe una palabra en español o en el idioma inventado:</p>
+        <input type="text" id="palabra" placeholder="Ej: Hola o shur...">
+        <button onclick="traducir()">Traducir</button>
+        <p id="resultado"></p>
+        <p class="nota">El traductor detecta el idioma automáticamente.</p>
+    </div>
+
+    <script>
+        // AQUÍ AGREGAS TUS PALABRAS ("español": "tu idioma")
+        const diccionarioEspanolTuIdioma = {
+            "hola": "shur",
+            "adios": "nara",
+            "perro": "wulf",
+            "gato": "miau",
+            "agua": "flu",
+            "fuego": "igni"
+        };
+
+        // Esto crea automáticamente el diccionario inverso (tu idioma al español)
+        const diccionarioTuIdiomaEspanol = {};
+        for (let esp in diccionarioEspanolTuIdioma) {
+            diccionarioTuIdiomaEspanol[diccionarioEspanolTuIdioma[esp]] = esp;
+        }
+
+        function traducir() {
+            let input = document.getElementById("palabra").value.toLowerCase().trim();
+            let resultado = document.getElementById("resultado");
+
+            if (input === "") {
+                resultado.innerText = "Por favor, escribe una palabra.";
+                resultado.style.color = "#333";
+                return;
+            }
+
+            // Primero busca si la palabra está en español
+            if (diccionarioEspanolTuIdioma[input]) {
+                resultado.innerText = "Traducción: " + diccionarioEspanolTuIdioma[input];
+                resultado.style.color = "#28a745"; // Verde
+            } 
+            // Si no está en español, busca si está en el idioma inventado
+            else if (diccionarioTuIdiomaEspanol[input]) {
+                resultado.innerText = "Traducción al español: " + diccionarioTuIdiomaEspanol[input];
+                resultado.style.color = "#28a745"; // Verde
+            } 
+            // Si no está en ninguno de los dos
+            else {
+                resultado.innerText = "Palabra no encontrada en el diccionario.";
+                resultado.style.color = "red";
+            }
+        }
+    </script>
+</body>
+</html>
